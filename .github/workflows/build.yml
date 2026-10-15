@@ -10,14 +10,12 @@ jobs:
         with:
           distribution: temurin
           java-version: 17
-      - name: Set API keys
+      - name: Create API_KEYS
         env:
           API_ID: ${{ secrets.API_ID }}
           API_HASH: ${{ secrets.API_HASH }}
         run: |
-          F=TMessagesProj/src/main/java/org/telegram/messenger/BuildVars.java
-          sed -i -E "s/APP_ID = [0-9]+;/APP_ID = $API_ID;/" $F
-          sed -i -E "s/APP_HASH = \"[0-9a-f]*\";/APP_HASH = \"$API_HASH\";/" $F
+          printf 'APP_ID = %s\nAPP_HASH = %s\n' "$API_ID" "$API_HASH" > API_KEYS
       - name: Accept SDK licenses
         run: yes | $ANDROID_HOME/cmdline-tools/latest/bin/sdkmanager --licenses || true
       - run: chmod +x gradlew
