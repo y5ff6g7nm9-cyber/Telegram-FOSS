@@ -21,7 +21,7 @@ jobs:
       - name: Accept SDK licenses
         run: yes | $ANDROID_HOME/cmdline-tools/latest/bin/sdkmanager --licenses || true
       - run: chmod +x gradlew
-      - run: ./gradlew :TMessagesProj_App:assembleAfatDebug --no-daemon
+      - run: ./gradlew :TMessagesProj_App:assembleAfatDebug --no-daemon -Dorg.gradle.jvmargs="-Xmx4g"
       - uses: actions/upload-artifact@v4
         with:
           name: apk
